@@ -43,6 +43,7 @@ class APIAuthController extends Controller
         $success['token'] =  $user->createToken(Config::get('app.name'))->accessToken;
         $success['name'] =  $user->name;
         return response()->json(['success' => $success], $this->successStatus);
+        
     }
 
     /** 
