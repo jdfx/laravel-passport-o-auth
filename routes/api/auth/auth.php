@@ -14,13 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group([
+    'name' => 'api.',
+    'prefix' => 'api',
+    'middleware' => 'api'
+], function () {
 
+    Route::group([
+        'name' => 'auth.',
+        'prefix' => 'auth',
+        'middleware' => 'api'
+    ], function () {
 
-Route::post('login', 'Auth\APIAuthController@login');
-Route::post('register', 'Auth\APIAuthController@register');
-Route::group(['middleware' => 'auth:api'], function(){
-Route::post('details', 'Auth\APIAuthController@details');
+        Route::post('register', 'Auth\APIAuthController@register')->name('api.auth.register');
+        Route::post('login', 'Auth\APIAuthController@login')->name('api.auth.login');
+
+    });
+
 });

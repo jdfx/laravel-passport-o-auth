@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -58,9 +59,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/web.php'));
+        foreach ( File::allFiles(base_path('routes/web')) as $file ) {
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group($file->getPathname());
+        }
     }
 
     /**
@@ -72,9 +75,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+        foreach ( File::allFiles(base_path('routes/api')) as $file ) {
+            Route::middleware('api')
+                ->namespace($this->namespace)
+                ->group($file->getPathname());
+        }
     }
 }
