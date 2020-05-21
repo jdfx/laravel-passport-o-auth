@@ -28,6 +28,33 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin password
+    |--------------------------------------------------------------------------
+    |
+    | This value is the admin password for the default admin user setup
+    | when you first migrate the application, please change this in 
+    | your .env
+    |
+    */
+
+    'admin_password' => env('ADMIN_PASSWORD', 'adminpassword'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin email
+    |--------------------------------------------------------------------------
+    |
+    | This value is the admin email for the default admin user setup
+    | when you first migrate the application, please change this in 
+    | your .env
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'someone@somewhere.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -166,6 +193,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
