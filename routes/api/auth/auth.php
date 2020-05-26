@@ -20,6 +20,9 @@ Route::group([
     'middleware' => 'api'
 ], function () {
 
+    /**
+     * LOGIN & REGISTER
+     */
     Route::group([
         'name' => 'auth.',
         'prefix' => 'auth',
@@ -31,12 +34,32 @@ Route::group([
 
     });
 
+    /**
+     * GET LOGGED IN USER DETAILS
+     */
     Route::group([
         'name' => 'auth.',
         'prefix' => 'auth',
         'middleware' => 'auth:api'
     ], function () {
+
         Route::get('details', 'Auth\APIAuthController@details')->name('api.auth.details');
+
+    });
+
+    /**
+     * RESET PASSWORD
+     */
+    Route::group([    
+        'namespace' => 'Auth',    
+        'middleware' => 'api',    
+        'prefix' => 'password-reset'
+    ], function () {    
+
+        Route::post('create', 'Auth\PasswordResetController@create');
+        Route::get('find/{token}', 'Auth\PasswordResetController@find');
+        Route::post('reset', 'Auth\PasswordResetController@reset');
+
     });
 
 });
