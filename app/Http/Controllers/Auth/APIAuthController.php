@@ -74,9 +74,11 @@ class APIAuthController extends Controller
         try {
             $user = User::with('roles')->find(Auth::user()->id);
             return response()->json([
-                "name" => $user->name,
-                "email" => $user->email,
-                "role" => $user->roles[0]->name
+                "user" => [
+                    "name" => $user->name,
+                    "email" => $user->email,
+                    "role" => $user->roles[0]->name
+                ]
             ]);
 
         } catch (\Exception $e) {
