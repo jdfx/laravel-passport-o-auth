@@ -31,4 +31,12 @@ Route::group([
 
     });
 
+    Route::group([
+        'name' => 'auth.',
+        'prefix' => 'auth',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::get('details', 'Auth\APIAuthController@details')->name('api.auth.details');
+    });
+
 });
