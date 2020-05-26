@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,12 +22,9 @@ Route::group([
     Route::group([
         'name' => 'user.',
         'prefix' => 'user',
-        'middleware' => 'api:auth'
+        'middleware' => 'auth:api'
     ], function () {
-        Route::get('details', 'Auth\APIAuthController@details')->name('api.user.details');
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        })->name('api.user.model');
+        Route::get('/details', 'User\UserController@details')->name('api.user.details');
     });
 });
 

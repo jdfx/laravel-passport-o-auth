@@ -3,8 +3,10 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,8 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = User::with('roles')->where(['email' => $this->email])->firstOrFail();
+        return Hash::check($this->password, $user->password);
     }
 
     /**
@@ -24,10 +27,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password'
+            'email' => 'required|email|string',
+            'password' => 'required|string',
         ];
     }
 }
