@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
@@ -36,7 +35,7 @@ class PasswordResetController extends Controller
 
         if ($user && $passwordReset){
             $user->notify(
-                new PasswordResetRequest($passwordReset->token)
+                new PasswordResetRequest($passwordReset->token, $request->reset_url)
             );
         }
 
@@ -107,6 +106,6 @@ class PasswordResetController extends Controller
         $user->save();
         $passwordReset->delete();
         $user->notify(new PasswordResetSuccess($passwordReset));
-        return response()->json($user);
+        return response()->json(["user" => ["name" => $user->name]], 200);
     }
 }

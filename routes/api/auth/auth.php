@@ -51,9 +51,9 @@ Route::group([
      * RESET PASSWORD
      */
     Route::group([    
-        'namespace' => 'Auth',    
+        'name' => 'auth.',    
+        'prefix' => 'auth/password-reset',
         'middleware' => 'api',    
-        'prefix' => 'password-reset'
     ], function () {    
 
         Route::post('create', 'Auth\PasswordResetController@create');

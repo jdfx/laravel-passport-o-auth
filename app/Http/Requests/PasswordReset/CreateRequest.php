@@ -24,7 +24,8 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email'
+            'email' => 'required|string|email',
+            'reset_url' => 'required|string'
         ];
     }
 }
